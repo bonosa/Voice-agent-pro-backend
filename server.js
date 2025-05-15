@@ -7,6 +7,11 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 app.use(cors());
 app.use(express.json());
 
+// Add root route for debugging
+app.get('/', (req, res) => {
+    res.send('Backend is running! Use POST /create-checkout-session to create a Stripe session.');
+});
+
 app.post('/create-checkout-session', async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.create({
